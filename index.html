@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Valentine's Project: Geraldine</title>
-    <style>
+    <title>System Update: For Geraldine</title> <style>
         :root { 
             --hazel-teal: #1fb5ad; --hazel-pink: #ff6b9d; --hazel-yellow: #ffcc00;
             --paper: #ffffff; --ink: #2d2d2d; 
@@ -13,7 +12,20 @@
             margin: 0; padding: 0; display: flex; justify-content: center; align-items: center;
             min-height: 100vh; background-color: var(--hazel-teal); 
             font-family: 'Montserrat', sans-serif; overflow: hidden; perspective: 1200px;
+            transition: background-color 0.8s;
         }
+
+        /* MINI GAME STYLES */
+        #game-screen {
+            text-align: center; color: white; z-index: 100;
+        }
+        .game-heart {
+            position: absolute; cursor: pointer; font-size: 2rem;
+            transition: transform 0.2s;
+        }
+        #score-board { font-weight: 900; font-size: 1.2rem; margin-bottom: 20px; }
+
+        /* BOOK STYLES */
         .book-container { width: 90%; max-width: 400px; position: relative; transform-style: preserve-3d; }
         .book-page {
             background: var(--paper); padding: 30px 40px; border-radius: 20px;
@@ -25,15 +37,36 @@
         .hidden { display: none; opacity: 0; }
         .turn-exit { transform: rotateY(-120deg); opacity: 0; }
         .turn-enter { transform: rotateY(120deg); opacity: 0; }
+        
         h1 { color: var(--hazel-pink); font-weight: 900; text-transform: uppercase; font-size: 2.1rem; margin-bottom: 5px; line-height: 1; }
         h2 { color: var(--hazel-teal); font-weight: 700; margin-top: 0; font-size: 1.4rem; }
         p { color: var(--ink); line-height: 1.5; font-size: 1rem; font-weight: 600; }
+        
         .badge { background: var(--hazel-yellow); color: var(--ink); font-size: 0.6rem; font-weight: 900; padding: 5px 10px; border-radius: 5px; border: 2px solid var(--ink); display: inline-block; margin-bottom: 15px; text-transform: uppercase; }
-        .choice-btn { display: block; width: 100%; padding: 12px; margin: 8px 0; border: 3px solid var(--ink); background: white; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 800; transition: 0.2s; color: var(--ink); text-transform: uppercase; border-radius: 8px; }
+
+        .choice-btn {
+            display: block; width: 100%; padding: 12px; margin: 8px 0;
+            border: 3px solid var(--ink); background: white;
+            cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 800;
+            transition: 0.2s; color: var(--ink); text-transform: uppercase; border-radius: 8px;
+        }
         .choice-btn:hover { background: var(--hazel-yellow); transform: translate(-3px, -3px); box-shadow: 4px 4px 0 var(--ink); }
-        .review-box { width: 100%; height: 80px; border: 3px solid var(--ink); border-radius: 8px; padding: 10px; font-family: 'Montserrat', sans-serif; font-weight: 600; color: var(--ink); resize: none; margin-bottom: 10px; box-sizing: border-box; }
-        .final-btn { background: var(--hazel-pink); color: white; padding: 16px 32px; text-decoration: none; display: inline-block; margin-top: 15px; font-weight: 900; border: 3px solid var(--ink); cursor: pointer; border-radius: 50px; text-transform: uppercase; }
+        
+        .review-box {
+            width: 100%; height: 80px; border: 3px solid var(--ink);
+            border-radius: 8px; padding: 10px; font-family: 'Montserrat', sans-serif;
+            font-weight: 600; color: var(--ink); resize: none; margin-bottom: 10px; box-sizing: border-box;
+        }
+
+        .final-btn {
+            background: var(--hazel-pink); color: white; padding: 16px 32px;
+            text-decoration: none; display: inline-block; margin-top: 15px; 
+            font-weight: 900; border: 3px solid var(--ink); cursor: pointer;
+            border-radius: 50px; text-transform: uppercase;
+        }
+
         #no-btn { position: absolute; transition: 0.15s ease; z-index: 100; padding: 10px 25px; background: white; border: 3px solid var(--ink); font-weight: 800; border-radius: 8px; }
+        
         .floating-icon { position: absolute; font-size: 24px; animation: float 6s linear infinite; bottom: -30px; z-index: 1; opacity: 0.4; }
         @keyframes float { 0% { transform: translateY(0) rotate(0deg); } 100% { transform: translateY(-110vh) rotate(360deg); } }
     </style>
@@ -45,13 +78,18 @@
         <source src="https://www.soundjay.com/misc/sounds/page-flip-01a.mp3" type="audio/mpeg">
     </audio>
 
-    <div class="book-container">
+    <div id="game-screen">
+        <div id="score-board">CATCH 5 HEARTS TO UNLOCK THE MESSAGE<br><span id="count">0</span> / 5</div>
+        <div id="game-area"></div>
+    </div>
+
+    <div class="book-container hidden" id="main-book">
         <div id="step1" class="book-page">
-            <div class="badge">#1 Bestseller in our Hearts</div>
-            <div style="font-size: 3rem; color: var(--hazel-yellow); margin-bottom: 10px;">📖</div>
-            <h1>The Lunch <br>Connection</h1>
+            <div class="badge">A Valentine's Special</div>
+            <div style="font-size: 3rem; color: var(--hazel-yellow); margin-bottom: 10px;">❤️</div>
+            <h1>The Valentine's <br>Rewrite</h1>
             <h2>By Gian Jelo</h2>
-            <p>A Limited Edition 2026 Release...</p>
+            <p>Dedicated to Geraldine...</p>
             <button class="choice-btn" onclick="flipPage('step1', 'step2')">Open Novel</button>
         </div>
 
@@ -72,7 +110,7 @@
         <div id="step4" class="book-page hidden">
             <h2>Chapter Two</h2>
             <p>The perfect meal for our lunch date...</p>
-            <div style="max-height: 200px; overflow-y: auto; padding-right: 5px;">
+            <div style="max-height: 200px; overflow-y: auto;">
                 <button class="choice-btn" onclick="saveChoice('Food', 'Chinese'); flipPage('step4', 'step5')">Chinese 🥟</button>
                 <button class="choice-btn" onclick="saveChoice('Food', 'Japanese'); flipPage('step4', 'step5')">Japanese 🍣</button>
                 <button class="choice-btn" onclick="saveChoice('Food', 'American'); flipPage('step4', 'step5')">American 🍔</button>
@@ -94,30 +132,27 @@
             <h2>Chapter Four</h2>
             <p>How shall we remember this day, Geraldine?</p>
             <button class="choice-btn" onclick="saveChoice('Souvenir', 'New Novel'); flipPage('step6', 'step7')">Pick a New Book 📖</button>
-            <button class="choice-btn" onclick="saveChoice('Souvenir', 'Professional Photo'); flipPage('step6', 'step7')">A Studio Photo Session 📸</button>
+            <button class="choice-btn" onclick="saveChoice('Souvenir', 'Studio Photo'); flipPage('step6', 'step7')">A Studio Photo Session 📸</button>
             <button class="choice-btn" onclick="saveChoice('Souvenir', 'DIY Baking'); flipPage('step6', 'step7')">Bake something together 🧁</button>
         </div>
 
         <div id="step7" class="book-page hidden">
             <h2>Reader's Review</h2>
-            <p>Any other plot twists or special notes, Geraldine?</p>
+            <p>Any other plot twists, Geraldine?</p>
             <textarea id="reviewText" class="review-box" placeholder="Write your notes here..."></textarea>
             <button class="choice-btn" id="submitBtn" onclick="sendData()">Finalize Story</button>
-            <p id="loadingMsg" class="hidden" style="color:var(--hazel-teal); font-size:0.7rem;">Publishing your choices...</p>
+            <p id="loadingMsg" class="hidden" style="color:var(--hazel-teal); font-size:0.7rem;">Publishing...</p>
         </div>
 
         <div id="final" class="book-page hidden">
             <h1>The Ending</h1>
             <p style="font-size: 1.1rem; margin-bottom: 5px;"><strong>"Will you be my Valentine, Geraldine?"</strong></p>
-            
-            <div style="background: var(--hazel-yellow); padding: 15px; border: 4px solid var(--ink); font-size: 0.9rem; text-align: left; margin: 10px 0; font-weight: 800; border-radius: 10px;">
+            <div style="background: var(--hazel-yellow); padding: 12px; border: 4px solid var(--ink); font-size: 0.9rem; text-align: left; margin: 10px 0; font-weight: 800; border-radius: 10px;">
                 DATE: Feb 14, 2026<br>
                 TIME: Lunch Date<br>
                 PLACE: Ayala Malls Manila Bay
             </div>
-            
             <p id="summary-text" style="font-size: 0.65rem; color: #555; text-transform: uppercase; font-weight: 800;"></p>
-            
             <button class="final-btn" onclick="location.href='https://m.me/jeloskyy'">Yes!</button>
             <button id="no-btn" onmouseover="moveNo()" onclick="moveNo()">No</button>
         </div>
@@ -125,15 +160,38 @@
 
     <script>
         let choices = {};
+        let heartsCaught = 0;
         const flipSound = document.getElementById('pageSound');
+
+        // MINI GAME LOGIC
+        function spawnHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'game-heart';
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 80 + 10 + 'vw';
+            heart.style.top = Math.random() * 80 + 10 + 'vh';
+            heart.onclick = () => {
+                heartsCaught++;
+                document.getElementById('count').innerText = heartsCaught;
+                heart.remove();
+                if (heartsCaught < 5) spawnHeart();
+                else unlockBook();
+            };
+            document.getElementById('game-area').appendChild(heart);
+        }
+
+        function unlockBook() {
+            document.getElementById('game-screen').classList.add('hidden');
+            document.getElementById('main-book').classList.remove('hidden');
+        }
+
+        spawnHeart(); // Start game
 
         function saveChoice(key, value) { choices[key] = value; }
 
         function sendData() {
             const review = document.getElementById('reviewText').value;
             choices['Review'] = review;
-            choices['Subject'] = "Valentine Choices from Geraldine";
-            
             document.getElementById('submitBtn').disabled = true;
             document.getElementById('loadingMsg').classList.remove('hidden');
 
@@ -141,27 +199,22 @@
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(choices)
-            }).finally(() => {
-                flipPage('step7', 'final');
-            });
+            }).finally(() => { flipPage('step7', 'final'); });
         }
 
         function flipPage(currentId, nextId) {
             const current = document.getElementById(currentId);
             const next = document.getElementById(nextId);
             flipSound.play().catch(e => {});
-
             current.classList.add('turn-exit');
             setTimeout(() => {
                 current.classList.add('hidden');
                 current.classList.remove('turn-exit');
                 next.classList.remove('hidden');
                 next.classList.add('turn-enter');
-                
                 if(nextId === 'final') {
                     document.body.style.backgroundColor = "var(--hazel-pink)";
-                    const rev = choices.Review ? ` | Note: ${choices.Review}` : '';
-                    document.getElementById('summary-text').innerText = `${choices.Vibe} • ${choices.Food} • ${choices.Activity} • ${choices.Souvenir}${rev}`;
+                    document.getElementById('summary-text').innerText = `${choices.Vibe} • ${choices.Food} • ${choices.Activity} • ${choices.Souvenir}`;
                     setInterval(createIcon, 400);
                 }
                 setTimeout(() => { next.classList.remove('turn-enter'); }, 50);
@@ -176,7 +229,7 @@
 
         function createIcon() {
             const icon = document.createElement('div');
-            icon.classList.add('floating-icon');
+            icon.className = 'floating-icon';
             icon.innerHTML = Math.random() > 0.5 ? '📖' : '❤️';
             icon.style.left = Math.random() * 100 + 'vw';
             icon.style.animationDuration = (Math.random() * 3 + 3) + 's';
