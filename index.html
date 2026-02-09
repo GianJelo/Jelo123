@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minigame</title> <style>
+    <title>Minigame</title> 
+    <style>
         :root { 
             --hazel-teal: #1fb5ad; --hazel-pink: #ff6b9d; --hazel-yellow: #ffcc00;
             --paper: #ffffff; --ink: #2d2d2d; 
@@ -14,7 +15,7 @@
             font-family: 'Montserrat', sans-serif; overflow: hidden; perspective: 1200px;
         }
 
-        /* BACKGROUND CROSS-FADE SYSTEM */
+        /* BACKGROUND CROSS-FADE SYSTEM (Hidden initially) */
         .bg-layer {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: -3; background-size: cover; background-position: center;
@@ -28,10 +29,11 @@
             100% { transform: scale(1.3) translate(-1%, -1%); }
         }
 
+        /* OVERLAY - Solid during game, translucent after */
         #bg-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background-color: var(--hazel-teal); z-index: -1;
-            opacity: 0.6; transition: background-color 1.5s;
+            opacity: 1; transition: opacity 1.5s, background-color 1.5s;
         }
 
         /* MINI GAME STYLES */
@@ -74,7 +76,7 @@
 
     <audio id="pageSound" preload="auto"><source src="https://www.soundjay.com/misc/sounds/page-flip-01a.mp3" type="audio/mpeg"></audio>
 
-    <div id="bg1" class="bg-layer bg-active"></div>
+    <div id="bg1" class="bg-layer"></div>
     <div id="bg2" class="bg-layer"></div>
     <div id="bg-overlay"></div>
 
@@ -86,7 +88,7 @@
     <div class="book-container hidden" id="main-book">
         <div id="step1" class="book-page">
             <div class="badge">A Valentine's Bestseller</div>
-            <h1>The Geraldine <br>Equation</h1>
+            <h1>The Valentine's <br>Hypothesis</h1>
             <h2>By Gian Jelo</h2>
             <button class="choice-btn" onclick="flipPage('step1', 'step2')">Open Novel</button>
         </div>
@@ -173,8 +175,6 @@
             currentEl.classList.remove('bg-active');
             activeBg = nextBg;
         }
-        document.getElementById('bg1').style.backgroundImage = `url(${images[0]})`;
-        setInterval(cycleBackground, 6000);
 
         function createBurst(x, y, color) {
             for (let i = 0; i < 12; i++) {
@@ -209,7 +209,16 @@
         function unlockBook() {
             document.getElementById('game-screen').classList.add('hidden');
             document.getElementById('main-book').classList.remove('hidden');
+            
+            // Un-mask the photos
+            document.getElementById('bg-overlay').style.opacity = "0.6";
+            document.getElementById('bg1').style.backgroundImage = `url(${images[0]})`;
+            document.getElementById('bg1').classList.add('bg-active');
+            
+            // Start the cycle
+            setInterval(cycleBackground, 6000);
         }
+        
         spawnBook();
 
         function saveChoice(key, value) { choices[key] = value; }
