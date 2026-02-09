@@ -3,72 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Little Surprise...</title>
+    <title>Saturday Plans Update</title>
     <style>
         body {
             margin: 0; padding: 0;
             display: flex; justify-content: center; align-items: center;
             min-height: 100vh;
-            background-color: #fff0f3;
-            font-family: 'Segoe UI', sans-serif;
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden;
             text-align: center;
+            transition: background-color 1s ease;
         }
-        #intro-screen { z-index: 20; }
-        .unlock-btn {
-            background: #ff477e; color: white; border: none; padding: 20px;
-            border-radius: 50%; font-size: 2rem; cursor: pointer;
-            box-shadow: 0 0 20px rgba(255, 71, 126, 0.4);
-            animation: pulse 1.5s infinite;
+
+        .step-container {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            max-width: 380px;
+            width: 90%;
+            z-index: 10;
         }
-        .card {
-            display: none; background: white; padding: 2rem; border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(255, 71, 126, 0.2);
-            max-width: 350px; width: 90%; z-index: 10; animation: fadeIn 1s;
+
+        .hidden { display: none; }
+        
+        h2 { color: #333; margin-bottom: 15px; font-size: 1.4rem; }
+        p { color: #666; font-size: 1rem; line-height: 1.5; }
+
+        .option-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            margin: 12px 0;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            background: white;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            color: #444;
         }
-        h1 { color: #ff477e; }
-        .details {
-            background: #fff8f9; padding: 15px; border-radius: 12px;
-            margin: 20px 0; border: 1px dashed #ff477e; font-size: 0.95rem;
+
+        .option-btn:hover {
+            border-color: #ff477e;
+            background: #fff0f3;
+            transform: translateY(-2px);
+            color: #ff477e;
         }
-        .btn {
+
+        .final-btn {
             background: #0084ff; /* Messenger Blue */
-            color: white; padding: 12px 25px; text-decoration: none;
-            border-radius: 25px; display: inline-block; font-weight: bold;
+            color: white;
+            padding: 16px 32px;
+            text-decoration: none;
+            border-radius: 30px;
+            display: inline-block;
+            margin-top: 20px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 132, 255, 0.3);
         }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Floating Hearts Animation */
         .heart { position: absolute; color: #ffb3c1; font-size: 20px; animation: float 6s linear infinite; bottom: -20px; z-index: 1; }
-        @keyframes float { 0% { transform: translateY(0) rotate(0deg); opacity: 1; } 100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; } }
+        @keyframes float { 
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; } 
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; } 
+        }
     </style>
 </head>
 <body>
 
-    <div id="intro-screen">
-        <p style="color: #ff477e; font-weight: bold;">Tap the heart to open your surprise!</p>
-        <button class="unlock-btn" onclick="unlock()">❤️</button>
+    <div id="step1" class="step-container">
+        <div style="font-size: 2rem; margin-bottom: 10px;">📅</div>
+        <h2>Quick Trip Update</h2>
+        <p>I put together a quick survey to finalize our plans for this Saturday, Feb 14.</p>
+        <button class="option-btn" onclick="nextStep(1, 2)">Open Survey</button>
     </div>
 
-    <div class="card" id="main-card">
-        <span>💌</span>
-        <h1>Will you be my Valentine?</h1>
-        <p>I'd love to spend the day with you!</p>
+    <div id="step2" class="step-container hidden">
+        <h2>What's the vibe?</h2>
+        <p>How should we dress for Ayala Malls Manila Bay?</p>
+        <button class="option-btn" onclick="saveChoice('Vibe', 'Formal'); nextStep(2, 3)">Formal & Classy ✨</button>
+        <button class="option-btn" onclick="saveChoice('Vibe', 'Casual'); nextStep(2, 3)">Casual & Comfy 👟</button>
+    </div>
+
+    <div id="step3" class="step-container hidden">
+        <h2>What are we craving?</h2>
+        <p>Pick a flavor for our dinner/snack time.</p>
+        <button class="option-btn" onclick="saveChoice('Food', 'Steak/Fine Dining'); nextStep(3, 4)">Fancy Dinner 🍷</button>
+        <button class="option-btn" onclick="saveChoice('Food', 'Asian/Street Food'); nextStep(3, 4)">Asian Fusion 🍜</button>
+        <button class="option-btn" onclick="saveChoice('Food', 'Desserts/Coffee'); nextStep(3, 4)">Coffee & Desserts 🍰</button>
+    </div>
+
+    <div id="step4" class="step-container hidden">
+        <h2>What's the main event?</h2>
+        <button class="option-btn" onclick="saveChoice('Activity', 'Movies'); finish()">Watch a Movie 🍿</button>
+        <button class="option-btn" onclick="saveChoice('Activity', 'Stroll'); finish()">Stroll & Sunset Viewing 🌅</button>
+        <button class="option-btn" onclick="saveChoice('Activity', 'Arcade'); finish()">Gaming & Arcade 🕹️</button>
+    </div>
+
+    <div id="final-screen" class="step-container hidden">
+        <h1 style="color: #ff477e; margin-bottom: 10px;">Surprise! ❤️</h1>
+        <p style="font-weight: bold; color: #333;">Will you be my Valentine?</p>
         
-        <div class="details">
-            <strong>The Plan:</strong> We will be together going there!<br>
+        <div style="background: #fff8f9; padding: 15px; border-radius: 12px; border: 1px dashed #ff477e; text-align: left; font-size: 0.9rem; margin: 20px 0;">
+            <strong>The Plan:</strong> Together going there!<br>
             <strong>Where:</strong> Ayala Malls Manila Bay<br>
-            <strong>When:</strong> February 14, 2026
+            <strong>When:</strong> Feb 14, 2026
         </div>
 
-        <a href="https://m.me/YOUR_USERNAME" class="btn">REPLY ON MESSENGER</a>
+        <p id="summary-text" style="font-size: 0.85rem; color: #888; font-style: italic;"></p>
+        
+        <a id="messenger-link" href="https://m.me/jeloskyy" class="final-btn">SEND CHOICES TO JELO</a>
     </div>
 
     <script>
-        function unlock() {
-            document.getElementById('intro-screen').style.display = 'none';
-            document.getElementById('main-card').style.display = 'block';
+        let choices = {};
+
+        function nextStep(current, next) {
+            document.getElementById('step' + current).classList.add('hidden');
+            document.getElementById('step' + next).classList.remove('hidden');
+        }
+
+        function saveChoice(key, value) {
+            choices[key] = value;
+        }
+
+        function finish() {
+            document.getElementById('step4').classList.add('hidden');
+            document.getElementById('final-screen').classList.remove('hidden');
+            document.body.style.backgroundColor = "#fff0f3"; 
+            
+            const summary = `${choices.Vibe} vibe with ${choices.Food} and ${choices.Activity}!`;
+            document.getElementById('summary-text').innerText = "Summary: " + summary;
+            
+            // Set the Messenger Link with your username
+            document.getElementById('messenger-link').href = "https://m.me/jeloskyy";
+
             setInterval(createHeart, 400);
         }
+
         function createHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
