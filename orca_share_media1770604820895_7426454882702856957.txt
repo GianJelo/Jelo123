@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Invitation</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #fff0f3;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #4a4a4a;
+            overflow: hidden;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 71, 126, 0.2);
+            text-align: center;
+            max-width: 350px;
+            width: 90%;
+            z-index: 10;
+        }
+
+        h1 { color: #ff477e; margin-bottom: 10px; }
+        p { line-height: 1.6; font-size: 1.1rem; }
+        
+        .details {
+            background: #fff8f9;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border: 1px dashed #ff477e;
+        }
+
+        .btn {
+            background: #ff477e;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 25px;
+            display: inline-block;
+            transition: transform 0.2s;
+            font-weight: bold;
+        }
+
+        .btn:hover { transform: scale(1.05); }
+
+        /* Floating Hearts Animation */
+        .heart {
+            position: absolute;
+            color: #ffb3c1;
+            font-size: 20px;
+            animation: float 6s linear infinite;
+            bottom: -20px;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <span>❤️</span>
+        <h1>Happy Valentine's!</h1>
+        <p>I’d love to spend the day with you. Will you be my Valentine?</p>
+        
+        <div class="details">
+            <strong>Where:</strong> Ayala Malls Manila Bay<br>
+            <strong>When:</strong> February 14, 2026
+        </div>
+
+        <a href="https://wa.me/?text=I'd%20love%20to!" class="btn">YES, I'LL BE THERE!</a>
+    </div>
+
+    <script>
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 6000);
+        }
+        setInterval(createHeart, 500);
+    </script>
+</body>
+</html>
