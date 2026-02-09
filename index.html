@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>System Update: For Geraldine</title> 
-    <style>
+    <title>Minigame</title> <style>
         :root { 
             --hazel-teal: #1fb5ad; --hazel-pink: #ff6b9d; --hazel-yellow: #ffcc00;
             --paper: #ffffff; --ink: #2d2d2d; 
@@ -15,7 +14,7 @@
             font-family: 'Montserrat', sans-serif; overflow: hidden; perspective: 1200px;
         }
 
-        /* FIXED BACKGROUND CROSS-FADE SYSTEM */
+        /* BACKGROUND CROSS-FADE SYSTEM */
         .bg-layer {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: -3; background-size: cover; background-position: center;
@@ -37,8 +36,8 @@
 
         /* MINI GAME STYLES */
         #game-screen { text-align: center; color: white; z-index: 100; width: 100vw; height: 100vh; position: absolute; }
-        #score-board { font-weight: 900; font-size: 1.2rem; margin-top: 50px; text-transform: uppercase; letter-spacing: 2px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
-        .game-heart { position: absolute; cursor: pointer; font-size: 3rem; user-select: none; animation: floatAround 6s ease-in-out infinite alternate; }
+        #score-board { font-weight: 900; font-size: 1.1rem; margin-top: 50px; text-transform: uppercase; letter-spacing: 2px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .game-book { position: absolute; cursor: pointer; font-size: 3rem; user-select: none; animation: floatAround 6s ease-in-out infinite alternate; }
         @keyframes floatAround { 0% { transform: translate(0, 0) rotate(-10deg); } 100% { transform: translate(var(--moveX), var(--moveY)) rotate(10deg); } }
         .particle { position: absolute; width: 8px; height: 8px; border-radius: 50%; pointer-events: none; animation: explode 0.6s ease-out forwards; }
         @keyframes explode { 0% { transform: translate(0, 0); opacity: 1; } 100% { transform: translate(var(--x), var(--y)); opacity: 0; } }
@@ -80,7 +79,7 @@
     <div id="bg-overlay"></div>
 
     <div id="game-screen">
-        <div id="score-board">CATCH 5 HEARTS FOR GERALDINE<br><span id="count">0</span> / 5</div>
+        <div id="score-board">CATCH 5 BOOKS TO UNLOCK THE BOOK<br><span id="count">0</span> / 5</div>
         <div id="game-area"></div>
     </div>
 
@@ -100,7 +99,7 @@
 
         <div id="step3" class="book-page hidden">
             <h2>Chapter One: The Arrival</h2>
-            <p>As they walk into the mall, how are they described in this scene?</p>
+            <p>As you walk into the mall, how are we described in this scene?</p>
             <button class="choice-btn" onclick="saveChoice('Vibe', 'Classy'); flipPage('step3', 'step4')">Classy ✨</button>
             <button class="choice-btn" onclick="saveChoice('Vibe', 'Casual'); flipPage('step3', 'step4')">Casual 👟</button>
             <button class="choice-btn" onclick="saveChoice('Vibe', 'Pambahay'); flipPage('step3', 'step4')">Pambahay 👕</button>
@@ -129,10 +128,10 @@
 
         <div id="step6" class="book-page hidden">
             <h2>Chapter Four: The Souvenir</h2>
-            <p>How should Geraldine anchor this memory of the bay?</p>
+            <p>How should you anchor this memory of the bay?</p>
             <button class="choice-btn" onclick="saveChoice('Souvenir', 'New Novel'); flipPage('step6', 'step7')">A New Novel 📖</button>
             <button class="choice-btn" onclick="saveChoice('Souvenir', 'Studio Portrait'); flipPage('step6', 'step7')">A Studio Portrait 📸</button>
-            <button class="choice-btn" onclick="saveChoice('Souvenir', 'DIY Baking'); flipPage('step6', 'step7')">Baking a Memory 🧁</button>
+            <button class="choice-btn" onclick="saveChoice('Souvenir', 'DIY Baking'); flipPage('step6', 'step7')">Bake something together 🧁</button>
         </div>
 
         <div id="step7" class="book-page hidden">
@@ -157,7 +156,7 @@
 
     <script>
         let choices = {};
-        let heartsCaught = 0;
+        let itemsCaught = 0;
         const flipSound = document.getElementById('pageSound');
         const images = ['us1.jpg', 'us2.jpg', 'us3.jpg', 'us4.jpg', 'us5.jpg', 'us6.jpg', 'us7.jpg', 'us8.jpg', 'us9.jpg', 'us10.jpg'];
         let currentImgIndex = 0;
@@ -167,18 +166,13 @@
             currentImgIndex = (currentImgIndex + 1) % images.length;
             const nextImg = images[currentImgIndex];
             const nextBg = activeBg === 1 ? 2 : 1;
-            
             const nextEl = document.getElementById('bg' + nextBg);
             const currentEl = document.getElementById('bg' + activeBg);
-            
             nextEl.style.backgroundImage = `url(${nextImg})`;
             nextEl.classList.add('bg-active');
             currentEl.classList.remove('bg-active');
-            
             activeBg = nextBg;
         }
-
-        // Initialize first image
         document.getElementById('bg1').style.backgroundImage = `url(${images[0]})`;
         setInterval(cycleBackground, 6000);
 
@@ -194,29 +188,29 @@
             }
         }
 
-        function spawnHeart() {
-            const heart = document.createElement('div');
-            heart.className = 'game-heart'; heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 80 + 10 + 'vw';
-            heart.style.top = Math.random() * 60 + 20 + 'vh';
-            heart.style.setProperty('--moveX', (Math.random() - 0.5) * 150 + 'px');
-            heart.style.setProperty('--moveY', (Math.random() - 0.5) * 150 + 'px');
-            heart.onclick = (e) => {
-                heartsCaught++;
-                document.getElementById('count').innerText = heartsCaught;
-                createBurst(e.clientX, e.clientY, '#ff6b9d');
-                heart.remove();
-                if (heartsCaught < 5) spawnHeart();
+        function spawnBook() {
+            const book = document.createElement('div');
+            book.className = 'game-book'; book.innerHTML = '📖';
+            book.style.left = Math.random() * 80 + 10 + 'vw';
+            book.style.top = Math.random() * 60 + 20 + 'vh';
+            book.style.setProperty('--moveX', (Math.random() - 0.5) * 150 + 'px');
+            book.style.setProperty('--moveY', (Math.random() - 0.5) * 150 + 'px');
+            book.onclick = (e) => {
+                itemsCaught++;
+                document.getElementById('count').innerText = itemsCaught;
+                createBurst(e.clientX, e.clientY, '#ffcc00');
+                book.remove();
+                if (itemsCaught < 5) spawnBook();
                 else unlockBook();
             };
-            document.getElementById('game-area').appendChild(heart);
+            document.getElementById('game-area').appendChild(book);
         }
 
         function unlockBook() {
             document.getElementById('game-screen').classList.add('hidden');
             document.getElementById('main-book').classList.remove('hidden');
         }
-        spawnHeart();
+        spawnBook();
 
         function saveChoice(key, value) { choices[key] = value; }
 
