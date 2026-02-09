@@ -48,7 +48,6 @@
             100% { transform: translate(var(--moveX), var(--moveY)) rotate(10deg); }
         }
 
-        /* Particles */
         .particle { position: absolute; width: 8px; height: 8px; border-radius: 50%; pointer-events: none; animation: explode 0.6s ease-out forwards; }
         @keyframes explode { 0% { transform: translate(0, 0); opacity: 1; } 100% { transform: translate(var(--x), var(--y)); opacity: 0; } }
 
@@ -67,7 +66,7 @@
         
         h1 { color: var(--hazel-pink); font-weight: 900; text-transform: uppercase; font-size: 2.1rem; margin-bottom: 5px; line-height: 1; }
         h2 { color: var(--hazel-teal); font-weight: 700; margin-top: 0; font-size: 1.4rem; }
-        p { color: var(--ink); line-height: 1.5; font-size: 1rem; font-weight: 600; }
+        p { color: var(--ink); line-height: 1.5; font-size: 0.95rem; font-weight: 600; }
         .badge { background: var(--hazel-yellow); color: var(--ink); font-size: 0.6rem; font-weight: 900; padding: 5px 10px; border-radius: 5px; border: 2px solid var(--ink); display: inline-block; margin-bottom: 15px; text-transform: uppercase; }
 
         .choice-btn { display: block; width: 100%; padding: 12px; margin: 8px 0; border: 3px solid var(--ink); background: white; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 800; transition: 0.2s; color: var(--ink); text-transform: uppercase; border-radius: 8px; }
@@ -94,75 +93,75 @@
 
     <div class="book-container hidden" id="main-book">
         <div id="step1" class="book-page">
-            <div class="badge">A Valentine's Special</div>
+            <div class="badge">A Valentine's Bestseller</div>
             <div style="font-size: 3rem; color: var(--hazel-yellow); margin-bottom: 10px;">❤️</div>
-            <h1>The Valentine's <br>Rewrite</h1>
+            <h1>The Geraldine <br>Equation</h1>
             <h2>By Gian Jelo</h2>
-            <p>Dedicated to Geraldine...</p>
+            <p>A limited edition story of Feb 14...</p>
             <button class="choice-btn" onclick="flipPage('step1', 'step2')">Open Novel</button>
         </div>
 
         <div id="step2" class="book-page hidden">
-            <h2>For Geraldine</h2>
-            <p><em>"To the girl who reads between the lines. I'm taking you to <strong>Ayala Malls Manila Bay</strong>, but you're the one in charge of the plot twists today."</em></p>
-            <button class="choice-btn" onclick="flipPage('step2', 'step3')">Begin Chapter 1</button>
+            <h2>Prologue</h2>
+            <p><em>"To Geraldine, the girl who reads between the lines. I'm taking you to <strong>Ayala Malls Manila Bay</strong>, but you're the one in charge of the plot twists today."</em></p>
+            <button class="choice-btn" onclick="flipPage('step2', 'step3')">Turn Page</button>
         </div>
 
         <div id="step3" class="book-page hidden">
-            <h2>Chapter One</h2>
-            <p>What's the vibe of the meeting, Geraldine?</p>
-            <button class="choice-btn" onclick="saveChoice('Vibe', 'Classy'); flipPage('step3', 'step4')">Classy ✨</button>
-            <button class="choice-btn" onclick="saveChoice('Vibe', 'Casual'); flipPage('step3', 'step4')">Casual 👟</button>
-            <button class="choice-btn" onclick="saveChoice('Vibe', 'Pambahay'); flipPage('step3', 'step4')">Pambahay 👕</button>
+            <h2>Chapter One: The Arrival</h2>
+            <p>The February sun hits the bay. Our characters meet for lunch. As they walk into the mall, how are they described in this scene?</p>
+            <button class="choice-btn" onclick="saveChoice('Vibe', 'Classy'); flipPage('step3', 'step4')">Classy & Elegant ✨</button>
+            <button class="choice-btn" onclick="saveChoice('Vibe', 'Casual'); flipPage('step3', 'step4')">Casual & Sweet 👟</button>
+            <button class="choice-btn" onclick="saveChoice('Vibe', 'Pambahay'); flipPage('step3', 'step4')">Pambahay (Plot Twist!) 👕</button>
         </div>
 
         <div id="step4" class="book-page hidden">
-            <h2>Chapter Two</h2>
-            <p>The perfect meal...</p>
+            <h2>Chapter Two: The Feast</h2>
+            <p>Conversation flows easily over a table filled with delicious aromas. What flavor anchors this romantic interlude?</p>
             <div style="max-height: 200px; overflow-y: auto;">
-                <button class="choice-btn" onclick="saveChoice('Food', 'Chinese'); flipPage('step4', 'step5')">Chinese 🥟</button>
-                <button class="choice-btn" onclick="saveChoice('Food', 'Japanese'); flipPage('step4', 'step5')">Japanese 🍣</button>
-                <button class="choice-btn" onclick="saveChoice('Food', 'American'); flipPage('step4', 'step5')">American 🍔</button>
-                <button class="choice-btn" onclick="saveChoice('Food', 'Thai'); flipPage('step4', 'step5')">Thai 🍜</button>
-                <button class="choice-btn" onclick="saveChoice('Food', 'Korean'); flipPage('step4', 'step5')">Korean 🥘</button>
-                <button class="choice-btn" onclick="saveChoice('Food', 'Italian'); flipPage('step4', 'step5')">Italian 🍝</button>
+                <button class="choice-btn" onclick="saveChoice('Food', 'Chinese'); flipPage('step4', 'step5')">Chinese Delicacies 🥟</button>
+                <button class="choice-btn" onclick="saveChoice('Food', 'Japanese'); flipPage('step4', 'step5')">Japanese Zen 🍣</button>
+                <button class="choice-btn" onclick="saveChoice('Food', 'American'); flipPage('step4', 'step5')">American Comfort 🍔</button>
+                <button class="choice-btn" onclick="saveChoice('Food', 'Thai'); flipPage('step4', 'step5')">Thai Spices 🍜</button>
+                <button class="choice-btn" onclick="saveChoice('Food', 'Korean'); flipPage('step4', 'step5')">Korean Heat 🥘</button>
+                <button class="choice-btn" onclick="saveChoice('Food', 'Italian'); flipPage('step4', 'step5')">Italian Romance 🍝</button>
             </div>
         </div>
 
         <div id="step5" class="book-page hidden">
-            <h2>Chapter Three</h2>
-            <p>The main event?</p>
-            <button class="choice-btn" onclick="saveChoice('Activity', 'Movie'); flipPage('step5', 'step6')">The Movies 🍿</button>
-            <button class="choice-btn" onclick="saveChoice('Activity', 'Arcade'); flipPage('step5', 'step6')">The Arcade 🎤</button>
-            <button class="choice-btn" onclick="saveChoice('Activity', 'Golf'); flipPage('step5', 'step6')">Mini Golf ⛳</button>
+            <h2>Chapter Three: The Main Event</h2>
+            <p>Laughter echoes through the mall as they head toward their afternoon adventure. Where does the climax of the day happen?</p>
+            <button class="choice-btn" onclick="saveChoice('Activity', 'Movie'); flipPage('step5', 'step6')">A Cinematic Escape 🍿</button>
+            <button class="choice-btn" onclick="saveChoice('Activity', 'Arcade'); flipPage('step5', 'step6')">Song & Games (Karaoke) 🎤</button>
+            <button class="choice-btn" onclick="saveChoice('Activity', 'Golf'); flipPage('step5', 'step6')">Playful Competition (Golf) ⛳</button>
         </div>
 
         <div id="step6" class="book-page hidden">
-            <h2>Chapter Four</h2>
-            <p>How shall we remember this day, Geraldine?</p>
-            <button class="choice-btn" onclick="saveChoice('Souvenir', 'New Novel'); flipPage('step6', 'step7')">Pick a New Book 📖</button>
-            <button class="choice-btn" onclick="saveChoice('Souvenir', 'Studio Photo'); flipPage('step6', 'step7')">A Studio Photo Session 📸</button>
-            <button class="choice-btn" onclick="saveChoice('Souvenir', 'DIY Baking'); flipPage('step6', 'step7')">Bake something together 🧁</button>
+            <h2>Chapter Four: The Souvenir</h2>
+            <p>No story is complete without a token to remember it by. How should Geraldine anchor this memory of the bay?</p>
+            <button class="choice-btn" onclick="saveChoice('Souvenir', 'New Novel'); flipPage('step6', 'step7')">A Brand New Novel 📖</button>
+            <button class="choice-btn" onclick="saveChoice('Souvenir', 'Studio Photo'); flipPage('step6', 'step7')">A Studio Portrait 📸</button>
+            <button class="choice-btn" onclick="saveChoice('Souvenir', 'DIY Baking'); flipPage('step6', 'step7')">Baking a Memory 🧁</button>
         </div>
 
         <div id="step7" class="book-page hidden">
-            <h2>Reader's Review</h2>
-            <p>Any other plot twists, Geraldine?</p>
-            <textarea id="reviewText" class="review-box" placeholder="Write your notes here..."></textarea>
-            <button class="choice-btn" id="submitBtn" onclick="sendData()">Finalize Story</button>
-            <p id="loadingMsg" class="hidden" style="color:var(--hazel-teal); font-size:0.7rem;">Publishing...</p>
+            <h2>Author's Review</h2>
+            <p>Every reader sees something the author missed. Geraldine, do you have any final plot twists or special notes to add to our story?</p>
+            <textarea id="reviewText" class="review-box" placeholder="Your suggestions here..."></textarea>
+            <button class="choice-btn" id="submitBtn" onclick="sendData()">Publish Story</button>
+            <p id="loadingMsg" class="hidden" style="color:var(--hazel-teal); font-size:0.7rem;">Sending choices to Gian Jelo...</p>
         </div>
 
         <div id="final" class="book-page hidden">
-            <h1>The Ending</h1>
+            <h1>Epilogue</h1>
             <p style="font-size: 1.1rem; margin-bottom: 5px;"><strong>"Will you be my Valentine, Geraldine?"</strong></p>
             <div style="background: var(--hazel-yellow); padding: 12px; border: 4px solid var(--ink); font-size: 0.9rem; text-align: left; margin: 10px 0; font-weight: 800; border-radius: 10px;">
                 DATE: Feb 14, 2026<br>
-                TIME: Lunch Date<br>
+                TIME: Lunch Time<br>
                 PLACE: Ayala Malls Manila Bay
             </div>
             <p id="summary-text" style="font-size: 0.65rem; color: #555; text-transform: uppercase; font-weight: 800;"></p>
-            <button class="final-btn" onclick="location.href='https://m.me/jeloskyy'">Yes!</button>
+            <button class="final-btn" onclick="location.href='https://m.me/jeloskyy'">Yes! ❤️</button>
             <button id="no-btn" onmouseover="moveNo()" onclick="moveNo()">No</button>
         </div>
     </div>
@@ -171,8 +170,6 @@
         let choices = {};
         let heartsCaught = 0;
         const flipSound = document.getElementById('pageSound');
-        
-        // GALLERY IMAGES - UPDATED TO 10
         const images = ['us1.jpg', 'us2.jpg', 'us3.jpg', 'us4.jpg', 'us5.jpg', 'us6.jpg', 'us7.jpg', 'us8.jpg', 'us9.jpg', 'us10.jpg'];
         let currentImgIndex = 0;
 
@@ -181,7 +178,7 @@
             bg.style.backgroundImage = `url(${images[currentImgIndex]})`;
             currentImgIndex = (currentImgIndex + 1) % images.length;
         }
-        setInterval(cycleBackground, 5000); // Cycles every 5 seconds
+        setInterval(cycleBackground, 5000);
         cycleBackground();
 
         function createBurst(x, y, color) {
@@ -205,7 +202,6 @@
             heart.style.top = Math.random() * 60 + 20 + 'vh';
             heart.style.setProperty('--moveX', (Math.random() - 0.5) * 150 + 'px');
             heart.style.setProperty('--moveY', (Math.random() - 0.5) * 150 + 'px');
-
             heart.onclick = (e) => {
                 heartsCaught++;
                 document.getElementById('count').innerText = heartsCaught;
@@ -228,6 +224,7 @@
 
         function sendData() {
             choices['Review'] = document.getElementById('reviewText').value;
+            choices['Girlfriend'] = "Geraldine";
             document.getElementById('submitBtn').disabled = true;
             document.getElementById('loadingMsg').classList.remove('hidden');
             fetch('https://formspree.io/f/mpqjwqnn', {
