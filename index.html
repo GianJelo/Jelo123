@@ -25,41 +25,15 @@
         .hidden { display: none; opacity: 0; }
         .turn-exit { transform: rotateY(-120deg); opacity: 0; }
         .turn-enter { transform: rotateY(120deg); opacity: 0; }
-        
-        /* Typography */
         h1 { color: var(--hazel-pink); font-weight: 900; text-transform: uppercase; font-size: 2.1rem; margin-bottom: 5px; line-height: 1; }
         h2 { color: var(--hazel-teal); font-weight: 700; margin-top: 0; font-size: 1.4rem; }
         p { color: var(--ink); line-height: 1.5; font-size: 1rem; font-weight: 600; }
-        
-        .badge {
-            background: var(--hazel-yellow); color: var(--ink); font-size: 0.6rem;
-            font-weight: 900; padding: 5px 10px; border-radius: 5px; border: 2px solid var(--ink);
-            display: inline-block; margin-bottom: 15px; text-transform: uppercase;
-        }
-
-        .choice-btn {
-            display: block; width: 100%; padding: 12px; margin: 8px 0;
-            border: 3px solid var(--ink); background: white;
-            cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 800;
-            transition: 0.2s; color: var(--ink); text-transform: uppercase; border-radius: 8px;
-        }
+        .badge { background: var(--hazel-yellow); color: var(--ink); font-size: 0.6rem; font-weight: 900; padding: 5px 10px; border-radius: 5px; border: 2px solid var(--ink); display: inline-block; margin-bottom: 15px; text-transform: uppercase; }
+        .choice-btn { display: block; width: 100%; padding: 12px; margin: 8px 0; border: 3px solid var(--ink); background: white; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 800; transition: 0.2s; color: var(--ink); text-transform: uppercase; border-radius: 8px; }
         .choice-btn:hover { background: var(--hazel-yellow); transform: translate(-3px, -3px); box-shadow: 4px 4px 0 var(--ink); }
-        
-        .review-box {
-            width: 100%; height: 80px; border: 3px solid var(--ink);
-            border-radius: 8px; padding: 10px; font-family: 'Montserrat', sans-serif;
-            font-weight: 600; color: var(--ink); resize: none; margin-bottom: 10px; box-sizing: border-box;
-        }
-
-        .final-btn {
-            background: var(--hazel-pink); color: white; padding: 16px 32px;
-            text-decoration: none; display: inline-block; margin-top: 15px; 
-            font-weight: 900; border: 3px solid var(--ink); cursor: pointer;
-            border-radius: 50px; text-transform: uppercase;
-        }
-
+        .review-box { width: 100%; height: 80px; border: 3px solid var(--ink); border-radius: 8px; padding: 10px; font-family: 'Montserrat', sans-serif; font-weight: 600; color: var(--ink); resize: none; margin-bottom: 10px; box-sizing: border-box; }
+        .final-btn { background: var(--hazel-pink); color: white; padding: 16px 32px; text-decoration: none; display: inline-block; margin-top: 15px; font-weight: 900; border: 3px solid var(--ink); cursor: pointer; border-radius: 50px; text-transform: uppercase; }
         #no-btn { position: absolute; transition: 0.15s ease; z-index: 100; padding: 10px 25px; background: white; border: 3px solid var(--ink); font-weight: 800; border-radius: 8px; }
-        
         .floating-icon { position: absolute; font-size: 24px; animation: float 6s linear infinite; bottom: -30px; z-index: 1; opacity: 0.4; }
         @keyframes float { 0% { transform: translateY(0) rotate(0deg); } 100% { transform: translateY(-110vh) rotate(360deg); } }
     </style>
@@ -74,10 +48,10 @@
     <div class="book-container">
         <div id="step1" class="book-page">
             <div class="badge">#1 Bestseller in our Hearts</div>
-            <div style="font-size: 3rem; color: var(--hazel-yellow); margin-bottom: 10px;">⚡</div>
+            <div style="font-size: 3rem; color: var(--hazel-yellow); margin-bottom: 10px;">📖</div>
             <h1>The Lunch <br>Connection</h1>
             <h2>By Gian Jelo</h2>
-            <p>A <em>Manila Bay Series</em> Special...</p>
+            <p>A Limited Edition 2026 Release...</p>
             <button class="choice-btn" onclick="flipPage('step1', 'step2')">Open Novel</button>
         </div>
 
@@ -97,7 +71,7 @@
 
         <div id="step4" class="book-page hidden">
             <h2>Chapter Two</h2>
-            <p>The perfect meal for our midday feast...</p>
+            <p>The perfect meal for our lunch date...</p>
             <div style="max-height: 200px; overflow-y: auto; padding-right: 5px;">
                 <button class="choice-btn" onclick="saveChoice('Food', 'Chinese'); flipPage('step4', 'step5')">Chinese 🥟</button>
                 <button class="choice-btn" onclick="saveChoice('Food', 'Japanese'); flipPage('step4', 'step5')">Japanese 🍣</button>
@@ -110,13 +84,21 @@
 
         <div id="step5" class="book-page hidden">
             <h2>Chapter Three</h2>
-            <p>The afternoon adventure at the mall?</p>
+            <p>The main event at the mall?</p>
             <button class="choice-btn" onclick="saveChoice('Activity', 'Movie'); flipPage('step5', 'step6')">The Movies 🍿</button>
             <button class="choice-btn" onclick="saveChoice('Activity', 'Arcade'); flipPage('step5', 'step6')">The Arcade 🎤</button>
             <button class="choice-btn" onclick="saveChoice('Activity', 'Golf'); flipPage('step5', 'step6')">Mini Golf ⛳</button>
         </div>
 
         <div id="step6" class="book-page hidden">
+            <h2>Chapter Four</h2>
+            <p>How shall we remember this day, Geraldine?</p>
+            <button class="choice-btn" onclick="saveChoice('Souvenir', 'New Novel'); flipPage('step6', 'step7')">Pick a New Book 📖</button>
+            <button class="choice-btn" onclick="saveChoice('Souvenir', 'Professional Photo'); flipPage('step6', 'step7')">A Studio Photo Session 📸</button>
+            <button class="choice-btn" onclick="saveChoice('Souvenir', 'DIY Baking'); flipPage('step6', 'step7')">Bake something together 🧁</button>
+        </div>
+
+        <div id="step7" class="book-page hidden">
             <h2>Reader's Review</h2>
             <p>Any other plot twists or special notes, Geraldine?</p>
             <textarea id="reviewText" class="review-box" placeholder="Write your notes here..."></textarea>
@@ -128,18 +110,16 @@
             <h1>The Ending</h1>
             <p style="font-size: 1.1rem; margin-bottom: 5px;"><strong>"Will you be my Valentine, Geraldine?"</strong></p>
             
-            <div style="background: var(--hazel-yellow); padding: 12px; border: 4px solid var(--ink); font-size: 0.8rem; text-align: left; margin: 10px 0; font-weight: 800; border-radius: 10px;">
-                DATE: Feb 14, 2026 | Lunch Date<br>
-                PLACE: Ayala Malls Manila Bay<br>
-                <strong>📸 SCREENSHOT THIS FOR GIAN JELO!</strong>
+            <div style="background: var(--hazel-yellow); padding: 15px; border: 4px solid var(--ink); font-size: 0.9rem; text-align: left; margin: 10px 0; font-weight: 800; border-radius: 10px;">
+                DATE: Feb 14, 2026<br>
+                TIME: Lunch Date<br>
+                PLACE: Ayala Malls Manila Bay
             </div>
             
             <p id="summary-text" style="font-size: 0.65rem; color: #555; text-transform: uppercase; font-weight: 800;"></p>
             
             <button class="final-btn" onclick="location.href='https://m.me/jeloskyy'">Yes!</button>
             <button id="no-btn" onmouseover="moveNo()" onclick="moveNo()">No</button>
-            
-            <p style="font-size: 0.5rem; margin-top: 20px; color: #888;">Technical Note: High-voltage romance detected. Powering our connection.</p>
         </div>
     </div>
 
@@ -162,7 +142,7 @@
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(choices)
             }).finally(() => {
-                flipPage('step6', 'final');
+                flipPage('step7', 'final');
             });
         }
 
@@ -181,7 +161,7 @@
                 if(nextId === 'final') {
                     document.body.style.backgroundColor = "var(--hazel-pink)";
                     const rev = choices.Review ? ` | Note: ${choices.Review}` : '';
-                    document.getElementById('summary-text').innerText = `${choices.Vibe} • ${choices.Food} • ${choices.Activity}${rev}`;
+                    document.getElementById('summary-text').innerText = `${choices.Vibe} • ${choices.Food} • ${choices.Activity} • ${choices.Souvenir}${rev}`;
                     setInterval(createIcon, 400);
                 }
                 setTimeout(() => { next.classList.remove('turn-enter'); }, 50);
