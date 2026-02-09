@@ -3,143 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chapter 2.14: The Date</title>
+    <title>The Valentine's Edition</title>
     <style>
+        :root { --paper: #fdfaf0; --ink: #2c3e50; --crimson: #8e2d2d; }
         body {
-            margin: 0; padding: 0;
-            display: flex; justify-content: center; align-items: center;
-            min-height: 100vh;
-            background-color: #f4f1ea; /* Book Paper Color */
-            font-family: 'Georgia', serif; /* Serif font for book feel */
-            overflow: hidden;
-            text-align: center;
-            transition: background-color 1s ease;
+            margin: 0; padding: 0; display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; background-color: #e5e5e5; font-family: 'Georgia', serif; overflow: hidden;
         }
-
-        .book-page {
-            background: #fffdf9;
-            padding: 3rem 2rem;
-            border-radius: 5px;
-            box-shadow: inset 0 0 50px rgba(0,0,0,0.05), 5px 5px 15px rgba(0,0,0,0.1);
-            max-width: 400px;
-            width: 85%;
-            z-index: 10;
-            border-left: 10px solid #8e2d2d; /* Book Spine */
-            position: relative;
+        .book {
+            background: var(--paper); padding: 40px; border-radius: 2px 15px 15px 2px;
+            box-shadow: 10px 10px 30px rgba(0,0,0,0.2); max-width: 400px; width: 85%;
+            border-left: 12px solid var(--crimson); position: relative; transition: all 0.5s;
         }
-
         .hidden { display: none; }
-        
-        h2 { color: #4a4a4a; font-style: italic; border-bottom: 1px solid #ddd; padding-bottom: 10px; }
-        p { color: #555; line-height: 1.6; font-size: 1.1rem; }
-
+        h1, h2 { color: var(--crimson); font-style: italic; margin-bottom: 20px; }
+        p { color: var(--ink); line-height: 1.7; font-size: 1.1rem; }
         .choice-btn {
-            display: block; width: 100%;
-            padding: 12px; margin: 10px 0;
-            border: 1px solid #c4b69c; border-radius: 4px;
-            background: transparent; cursor: pointer;
-            font-family: 'Georgia', serif; font-size: 1rem;
-            transition: all 0.3s; color: #5d503d;
+            display: block; width: 100%; padding: 12px; margin: 10px 0;
+            border: 1px solid #d1c7ac; border-radius: 0; background: transparent;
+            cursor: pointer; font-family: 'Georgia', serif; font-size: 1rem; color: var(--ink);
+            transition: 0.3s;
         }
-
-        .choice-btn:hover { background: #fdf5e6; border-color: #8e2d2d; color: #8e2d2d; }
-
+        .choice-btn:hover { background: #f5f0e1; border-color: var(--crimson); color: var(--crimson); }
         .final-btn {
-            background: #8e2d2d; color: white;
-            padding: 15px 30px; text-decoration: none;
-            border-radius: 2px; display: inline-block;
-            margin-top: 20px; font-weight: bold;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+            background: var(--crimson); color: white; padding: 15px 30px;
+            text-decoration: none; display: inline-block; margin-top: 20px; font-weight: bold;
         }
-
-        .heart { position: absolute; color: #8e2d2d; font-size: 18px; animation: float 6s linear infinite; bottom: -20px; z-index: 1; opacity: 0.6; }
-        @keyframes float { 0% { transform: translateY(0) rotate(0deg); opacity: 0.6; } 100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; } }
+        #no-btn { position: relative; transition: 0.2s; }
+        .heart { position: absolute; color: var(--crimson); font-size: 20px; animation: float 6s linear infinite; bottom: -20px; z-index: 1; opacity: 0.5; }
+        @keyframes float { 0% { transform: translateY(0); opacity: 0.5; } 100% { transform: translateY(-100vh); opacity: 0; } }
     </style>
 </head>
 <body>
 
-    <div id="step1" class="book-page">
-        <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px;">Reading Progress: 99%</p>
-        <h2>Prologue</h2>
-        <p>"Every great story needs a perfect setting. Before we finish this chapter, the reader must decide how it ends..."</p>
-        <button class="choice-btn" onclick="nextStep(1, 2)">Turn Page</button>
+    <div id="step1" class="book">
+        <p style="text-transform: uppercase; letter-spacing: 3px; font-size: 0.7rem;">Limited Edition • 2026</p>
+        <h1 style="font-size: 2.5rem;">A Lunch Date <br>at the Bay</h1>
+        <p>A novel by Gian Jelo</p>
+        <button class="choice-btn" onclick="nextStep(1, 2)">Open Book</button>
     </div>
 
-    <div id="step2" class="book-page hidden">
-        <h2>Chapter 1: The Wardrobe</h2>
-        <p>Our characters prepare for their journey to <strong>Ayala Malls Manila Bay</strong>. How should they be described in this scene?</p>
-        <button class="choice-btn" onclick="saveChoice('Vibe', 'Classy'); nextStep(2, 3)">Classy & Elegant</button>
-        <button class="choice-btn" onclick="saveChoice('Vibe', 'Casual'); nextStep(2, 3)">Casual & Sweet</button>
-        <button class="choice-btn" onclick="saveChoice('Vibe', 'Pambahay'); nextStep(2, 3)">Pambahay (Plot Twist!)</button>
+    <div id="step2" class="book hidden">
+        <h2>Dedication</h2>
+        <p><em>"To the girl who makes every day feel like a favorite chapter. Before we head to Ayala Malls Manila Bay, I need your help writing the lunch special..."</em></p>
+        <button class="choice-btn" onclick="nextStep(2, 3)">Continue Reading</button>
     </div>
 
-    <div id="step3" class="book-page hidden">
-        <h2>Chapter 2: The Feast</h2>
-        <p>A romantic interlude over a table of...</p>
+    <div id="step3" class="book hidden">
+        <h2>Chapter 1: The Sunlight</h2>
+        <p>The February sun hits <strong>Ayala Malls Manila Bay</strong>. How does our protagonist dress for the occasion?</p>
+        <button class="choice-btn" onclick="saveChoice('Vibe', 'Classy'); nextStep(3, 4)">Classy & Elegant ✨</button>
+        <button class="choice-btn" onclick="saveChoice('Vibe', 'Casual'); nextStep(3, 4)">Casual & Sweet 👟</button>
+        <button class="choice-btn" onclick="saveChoice('Vibe', 'Pambahay'); nextStep(3, 4)">Pambahay (Plot Twist!) 👕</button>
+    </div>
+
+    <div id="step4" class="book hidden">
+        <h2>Chapter 2: The Midday Feast</h2>
+        <p>What flavors shall fill our lunch table?</p>
         <div style="max-height: 250px; overflow-y: auto;">
-            <button class="choice-btn" onclick="saveChoice('Food', 'Chinese'); nextStep(3, 4)">Chinese Cuisine</button>
-            <button class="choice-btn" onclick="saveChoice('Food', 'Japanese'); nextStep(3, 4)">Japanese Delights</button>
-            <button class="choice-btn" onclick="saveChoice('Food', 'American'); nextStep(3, 4)">Classic American</button>
-            <button class="choice-btn" onclick="saveChoice('Food', 'Thai'); nextStep(3, 4)">Thai Aromas</button>
-            <button class="choice-btn" onclick="saveChoice('Food', 'Korean'); nextStep(3, 4)">Korean Flavors</button>
-            <button class="choice-btn" onclick="saveChoice('Food', 'Italian'); nextStep(3, 4)">Italian Romance</button>
+            <button class="choice-btn" onclick="saveChoice('Food', 'Chinese'); nextStep(4, 5)">Chinese Dim Sum 🥟</button>
+            <button class="choice-btn" onclick="saveChoice('Food', 'Japanese'); nextStep(4, 5)">Japanese Ramen/Sushi 🍣</button>
+            <button class="choice-btn" onclick="saveChoice('Food', 'American'); nextStep(4, 5)">American Grill 🍔</button>
+            <button class="choice-btn" onclick="saveChoice('Food', 'Thai'); nextStep(4, 5)">Thai Spices 🍜</button>
+            <button class="choice-btn" onclick="saveChoice('Food', 'Korean'); nextStep(4, 5)">Korean BBQ 🥘</button>
+            <button class="choice-btn" onclick="saveChoice('Food', 'Italian'); nextStep(4, 5)">Italian Pasta 🍝</button>
         </div>
     </div>
 
-    <div id="step4" class="book-page hidden">
-        <h2>Chapter 3: The Activity</h2>
-        <p>The story reaches its peak. What is the main event of the night?</p>
-        <button class="choice-btn" onclick="saveChoice('Activity', 'Movie'); finish()">A Cinematic Escape (Movie)</button>
-        <button class="choice-btn" onclick="saveChoice('Activity', 'Arcade/Karaoke'); finish()">A Song for Two (Karaoke)</button>
-        <button class="choice-btn" onclick="saveChoice('Activity', 'Mini Golf'); finish()">A Playful Competition (Golf)</button>
+    <div id="step5" class="book hidden">
+        <h2>Chapter 3: The Matinee</h2>
+        <p>How shall we spend our afternoon at the mall?</p>
+        <button class="choice-btn" onclick="saveChoice('Activity', 'Movie'); nextStep(5, 6)">A Lunchtime Movie 🍿</button>
+        <button class="choice-btn" onclick="saveChoice('Activity', 'Arcade/Karaoke'); nextStep(5, 6)">Arcade & Karaoke 🎤</button>
+        <button class="choice-btn" onclick="saveChoice('Activity', 'Mini Golf'); nextStep(5, 6)">Afternoon Mini Golf ⛳</button>
     </div>
 
-    <div id="final-screen" class="book-page hidden">
-        <h1 style="color: #8e2d2d; font-family: 'Times New Roman', serif;">Happy Valentine's Day</h1>
+    <div id="final-screen" class="book hidden">
+        <h1>The Final Question</h1>
         <p><strong>"Will you be my Valentine?"</strong></p>
-        
-        <div style="font-size: 0.9rem; text-align: left; background: #fffcf0; padding: 10px; border: 1px solid #e2d1b0; margin: 15px 0;">
-            📅 Feb 14, 2026<br>
-            📍 Ayala Malls Manila Bay<br>
-            🚗 Together going there!
+        <div style="background: #fffcf0; padding: 10px; border: 1px solid #e2d1b0; font-size: 0.9rem; text-align: left; margin: 15px 0;">
+            📅 Saturday, Feb 14, 2026<br>
+            🕛 <strong>Time:</strong> Lunch Time<br>
+            📍 Ayala Malls Manila Bay
         </div>
-
-        <p id="summary-text" style="font-size: 0.8rem; font-style: italic; color: #777;"></p>
-        <a id="messenger-link" href="https://m.me/jeloskyy" class="final-btn">WRITE OUR ENDING</a>
+        <button class="final-btn" onclick="location.href='https://m.me/jeloskyy'">YES!</button>
+        <button id="no-btn" class="choice-btn" onmouseover="moveNo()" style="width: auto; padding: 10px 20px; display: inline-block;">No</button>
     </div>
 
     <script>
         let choices = {};
-
         function nextStep(current, next) {
             document.getElementById('step' + current).classList.add('hidden');
             document.getElementById('step' + next).classList.remove('hidden');
         }
-
-        function saveChoice(key, value) {
-            choices[key] = value;
+        function saveChoice(key, value) { choices[key] = value; }
+        function moveNo() {
+            const btn = document.getElementById('no-btn');
+            btn.style.position = 'absolute';
+            btn.style.top = Math.random() * 80 + '%';
+            btn.style.left = Math.random() * 80 + '%';
         }
-
-        function finish() {
-            document.getElementById('step4').classList.add('hidden');
-            document.getElementById('final-screen').classList.remove('hidden');
-            document.body.style.backgroundColor = "#fff8f8"; 
-            
-            const summary = `Plot: ${choices.Vibe}, ${choices.Food}, and ${choices.Activity}`;
-            document.getElementById('summary-text').innerText = summary;
-            
-            setInterval(createHeart, 500);
-        }
-
         function createHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
-            heart.innerHTML = '❦'; // Classic literary flourish
+            heart.innerHTML = '❦';
             heart.style.left = Math.random() * 100 + 'vw';
             heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
             document.body.appendChild(heart);
             setTimeout(() => heart.remove(), 6000);
         }
+        setInterval(createHeart, 500);
     </script>
 </body>
 </html>
