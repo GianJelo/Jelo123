@@ -11,35 +11,46 @@
         }
         body {
             margin: 0; padding: 0; display: flex; justify-content: center; align-items: center;
-            min-height: 100vh; background-color: var(--hazel-teal); 
+            min-height: 100vh; background-color: var(--hazel-teal);
             font-family: 'Montserrat', sans-serif; overflow: hidden; perspective: 1200px;
-            transition: background-color 0.8s;
+        }
+
+        /* BACKGROUND CAROUSEL */
+        #bg-carousel {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -2; background-size: cover; background-position: center;
+            transition: background-image 1.5s ease-in-out;
+            animation: panZoom 20s ease-in-out infinite alternate;
+        }
+        
+        @keyframes panZoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.15) translate(-1%, -1%); }
+        }
+
+        #bg-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-color: var(--hazel-teal); z-index: -1;
+            opacity: 0.65; transition: background-color 1s;
         }
 
         /* MINI GAME STYLES */
         #game-screen { text-align: center; color: white; z-index: 100; width: 100vw; height: 100vh; position: absolute; }
-        #score-board { font-weight: 900; font-size: 1.2rem; margin-top: 50px; text-transform: uppercase; letter-spacing: 2px; text-shadow: 2px 2px 0px rgba(0,0,0,0.1); }
+        #score-board { font-weight: 900; font-size: 1.2rem; margin-top: 50px; text-transform: uppercase; letter-spacing: 2px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
         
         .game-heart {
-            position: absolute; cursor: pointer; font-size: 2.5rem;
-            user-select: none; animation: float 3s ease-in-out infinite;
-            display: flex; justify-content: center; align-items: center;
+            position: absolute; cursor: pointer; font-size: 3rem;
+            user-select: none; animation: floatAround 6s ease-in-out infinite alternate;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-20px) scale(1.1); }
+        @keyframes floatAround {
+            0% { transform: translate(0, 0) rotate(-10deg); }
+            100% { transform: translate(var(--moveX), var(--moveY)) rotate(10deg); }
         }
 
-        /* Burst Particles */
-        .particle {
-            position: absolute; width: 8px; height: 8px; border-radius: 50%;
-            pointer-events: none; animation: explode 0.6s ease-out forwards;
-        }
-        @keyframes explode {
-            0% { transform: translate(0, 0); opacity: 1; }
-            100% { transform: translate(var(--x), var(--y)); opacity: 0; }
-        }
+        /* Particles */
+        .particle { position: absolute; width: 8px; height: 8px; border-radius: 50%; pointer-events: none; animation: explode 0.6s ease-out forwards; }
+        @keyframes explode { 0% { transform: translate(0, 0); opacity: 1; } 100% { transform: translate(var(--x), var(--y)); opacity: 0; } }
 
         /* BOOK STYLES */
         .book-container { width: 90%; max-width: 400px; position: relative; transform-style: preserve-3d; }
@@ -59,12 +70,7 @@
         p { color: var(--ink); line-height: 1.5; font-size: 1rem; font-weight: 600; }
         .badge { background: var(--hazel-yellow); color: var(--ink); font-size: 0.6rem; font-weight: 900; padding: 5px 10px; border-radius: 5px; border: 2px solid var(--ink); display: inline-block; margin-bottom: 15px; text-transform: uppercase; }
 
-        .choice-btn {
-            display: block; width: 100%; padding: 12px; margin: 8px 0;
-            border: 3px solid var(--ink); background: white;
-            cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 800;
-            transition: 0.2s; color: var(--ink); text-transform: uppercase; border-radius: 8px;
-        }
+        .choice-btn { display: block; width: 100%; padding: 12px; margin: 8px 0; border: 3px solid var(--ink); background: white; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 800; transition: 0.2s; color: var(--ink); text-transform: uppercase; border-radius: 8px; }
         .choice-btn:hover { background: var(--hazel-yellow); transform: translate(-3px, -3px); box-shadow: 4px 4px 0 var(--ink); }
         .review-box { width: 100%; height: 80px; border: 3px solid var(--ink); border-radius: 8px; padding: 10px; font-family: 'Montserrat', sans-serif; font-weight: 600; color: var(--ink); resize: none; margin-bottom: 10px; box-sizing: border-box; }
         .final-btn { background: var(--hazel-pink); color: white; padding: 16px 32px; text-decoration: none; display: inline-block; margin-top: 15px; font-weight: 900; border: 3px solid var(--ink); cursor: pointer; border-radius: 50px; text-transform: uppercase; }
@@ -78,8 +84,11 @@
 
     <audio id="pageSound" preload="auto"><source src="https://www.soundjay.com/misc/sounds/page-flip-01a.mp3" type="audio/mpeg"></audio>
 
+    <div id="bg-carousel"></div>
+    <div id="bg-overlay"></div>
+
     <div id="game-screen">
-        <div id="score-board">CATCH 5 HEARTS TO UNLOCK<br><span id="count">0</span> / 5</div>
+        <div id="score-board">CATCH 5 HEARTS FOR GERALDINE<br><span id="count">0</span> / 5</div>
         <div id="game-area"></div>
     </div>
 
@@ -162,18 +171,29 @@
         let choices = {};
         let heartsCaught = 0;
         const flipSound = document.getElementById('pageSound');
+        
+        // GALLERY IMAGES
+        const images = ['us1.jpg', 'us2.jpg', 'us3.jpg', 'us4.jpg', 'us5.jpg'];
+        let currentImgIndex = 0;
+
+        function cycleBackground() {
+            const bg = document.getElementById('bg-carousel');
+            bg.style.backgroundImage = `url(${images[currentImgIndex]})`;
+            currentImgIndex = (currentImgIndex + 1) % images.length;
+        }
+        setInterval(cycleBackground, 6000);
+        cycleBackground();
 
         function createBurst(x, y, color) {
             for (let i = 0; i < 12; i++) {
                 const p = document.createElement('div');
                 p.className = 'particle';
                 p.style.backgroundColor = color;
-                p.style.left = x + 'px';
-                p.style.top = y + 'px';
+                p.style.left = x + 'px'; p.style.top = y + 'px';
                 p.style.setProperty('--x', (Math.random() - 0.5) * 200 + 'px');
                 p.style.setProperty('--y', (Math.random() - 0.5) * 200 + 'px');
                 document.body.appendChild(p);
-                setTimeout(() => p.remove(), 6000);
+                setTimeout(() => p.remove(), 2000);
             }
         }
 
@@ -183,16 +203,16 @@
             heart.innerHTML = '❤️';
             heart.style.left = Math.random() * 80 + 10 + 'vw';
             heart.style.top = Math.random() * 60 + 20 + 'vh';
+            heart.style.setProperty('--moveX', (Math.random() - 0.5) * 150 + 'px');
+            heart.style.setProperty('--moveY', (Math.random() - 0.5) * 150 + 'px');
+
             heart.onclick = (e) => {
                 heartsCaught++;
                 document.getElementById('count').innerText = heartsCaught;
                 createBurst(e.clientX, e.clientY, '#ff6b9d');
                 heart.remove();
                 if (heartsCaught < 5) spawnHeart();
-                else {
-                    for(let i=0; i<5; i++) setTimeout(() => createBurst(window.innerWidth/2, window.innerHeight/2, '#ffcc00'), i*200);
-                    setTimeout(unlockBook, 1000);
-                }
+                else setTimeout(unlockBook, 500);
             };
             document.getElementById('game-area').appendChild(heart);
         }
@@ -200,7 +220,6 @@
         function unlockBook() {
             document.getElementById('game-screen').classList.add('hidden');
             document.getElementById('main-book').classList.remove('hidden');
-            document.body.style.backgroundColor = "var(--hazel-teal)";
         }
 
         spawnHeart();
@@ -229,7 +248,7 @@
                 next.classList.remove('hidden');
                 next.classList.add('turn-enter');
                 if(nextId === 'final') {
-                    document.body.style.backgroundColor = "var(--hazel-pink)";
+                    document.getElementById('bg-overlay').style.backgroundColor = "var(--hazel-pink)";
                     document.getElementById('summary-text').innerText = `${choices.Vibe} • ${choices.Food} • ${choices.Activity} • ${choices.Souvenir}`;
                     setInterval(createIcon, 400);
                 }
